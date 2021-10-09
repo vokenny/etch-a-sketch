@@ -1,6 +1,7 @@
 :root {
   --ink: #9e9d9e;
   --screen: #f5f0f0;
+  --highlight: green;
 }
 
 * {
@@ -50,5 +51,6 @@ html {
 }
 
 .grid-unit:hover {
+  border: 3px solid var(--highlight);
   cursor: pointer;
 }
