@@ -56,7 +56,6 @@
   function applyGridUnitEventListeners(unit) {
     EVENTS.forEach(event => {
       unit.addEventListener(event.name, event.handler)
-      console.log('Added event listener');
     });
 
     hasGridEventListeners = true;
@@ -68,7 +67,6 @@
     gridUnits.forEach(unit =>
       EVENTS.forEach(event => {
         unit.removeEventListener(event.name, event.handler)
-        console.log('Removed event listener');
       })
     );
 
