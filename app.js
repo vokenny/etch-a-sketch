@@ -15,7 +15,7 @@
   ]
 
   const gridContainer = document.querySelector('#grid');
-  const gridDensityRadios = document.querySelectorAll('#grid-density-ctrls .button');
+  const gridDensityButtons = document.querySelectorAll('#grid-density-ctrls .button');
   const getGridUnits = () => document.querySelectorAll('.grid-unit');
 
   let gridDensity = 16;
@@ -95,12 +95,15 @@
   }
 
   function updateGridDensity(event) {
+    gridDensityButtons.forEach(button => button.classList.remove('selected'));
+    event.target.classList.add('selected');
+
     gridDensity = event.target.value;
     displayCleanGrid();
   }
 
   function applyControlsEventListeners() {
-    gridDensityRadios.forEach(radio => radio.addEventListener('click', updateGridDensity));
+    gridDensityButtons.forEach(button => button.addEventListener('click', updateGridDensity));
   }
 
   /* Main program */
