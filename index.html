@@ -18,31 +18,32 @@
   </head>
 
   <body>
-    <header>
-      <h1 id="title">Etch-a-Sketch</h1>
-    </header>
-
     <main>
+      <h1 id="title">Etch-a-Sketch</h1>
+
       <section id="etch-a-sketch">
-        <section id="grid"></section>
-
         <section id="controls">
-          <div id="grid-density-ctrls">
-            <p>Grid Density</p>
+          <fieldset id="controls-fieldset">
+            <legend><strong>Controls</strong></legend>
 
-            <button id="low" class="button" type="button selected" value="16">
-              16 x 16
-            </button>
+            <div id="grid-density-ctrls">
+              <p>Grid Density</p>
 
-            <button id="med" class="button" type="button" value="32">
-              32 x 32
-            </button>
+              <button id="low" class="button" type="button selected" value="16">
+                16 x 16
+              </button>
 
-            <button id="high" class="button" type="button" value="64">
-              64 x 64
-            </button>
-          </div>
+              <button id="med" class="button" type="button" value="32">
+                32 x 32
+              </button>
+
+              <button id="high" class="button" type="button" value="64">
+                64 x 64
+              </button>
+            </div>
+          </fieldset>
         </section>
+        <section id="grid"></section>
       </section>
     </main>
   </body>

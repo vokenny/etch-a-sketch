@@ -104,8 +104,6 @@
   }
 
   /* Main program */
-
   displayCleanGrid();
   applyControlsEventListeners();
-
 }())

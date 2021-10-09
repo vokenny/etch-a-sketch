@@ -37,23 +37,41 @@ body {
 
 #title {
   text-align: center;
-  color: var(--font-color);
 }
 
 #etch-a-sketch {
-  display: grid;
+  display: flex;
   justify-content: center;
+}
+
+#controls {
+  display: flex;
+  margin: 0 5vw;
+  height: min(75vw, 75vh);
+  min-width: 250px;
+  max-width: 600px;
+  max-height: 600px;
+}
+
+#controls-fieldset {
+  border: 2px solid var(--font-color);
+}
+
+#controls-fieldset > legend {
+  padding: 0 8px;
 }
 
 #grid {
   display: flex;
   justify-content: center;
-  margin: auto;
   width: min(75vw, 75vh);
   height: min(75vw, 75vh);
+  max-width: 600px;
+  max-height: 600px;
   flex-flow: row wrap;
   background-color: var(--screen);
-  border: 1px solid black;
+  border: 2px solid black;
+  margin-top: 8px;
 }
 
 .grid-unit {
@@ -67,25 +85,30 @@ body {
   cursor: pointer;
 }
 
-#controls {
-  display: flex;
-}
-
 .button {
   background-color: rgba(0, 0, 0, 0);
   border-radius: 5px;
-  border: 1px solid black;
+  height: 40px;
+  border: 1px solid var(--font-color);
   display: inline-block;
   color: var(--font-color);
   font-size: 15px;
-  padding: 9px 23px;
+  padding: 0 12px;
 }
 
 .button:hover {
   background-color: var(--highlight);
 }
 
-.button:active {
-  position: relative;
-  top: 1px;
+@media screen and (max-width: 900px) {
+  #etch-a-sketch {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  #controls {
+    display: block;
+    width: min(75vw, 75vh);
+    margin: 5vw 0;
+  }
 }
