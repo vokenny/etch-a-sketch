@@ -1,3 +1,8 @@
+:root {
+  --ink: #9e9d9e;
+  --screen: #f5f0f0;
+}
+
 * {
   box-sizing: border-box;
   font-family: 'Yaldevi', sans-serif;
@@ -35,11 +40,15 @@ html {
   width: min(75vw, 75vh);
   height: min(75vw, 75vh);
   flex-flow: row wrap;
-  background-color: whitesmoke;
+  background-color: var(--screen);
   border: 1px solid black;
 }
 
 .grid-unit {
-  background-color: whitesmoke;
-  border: 0.5px solid grey;
+  background-color: var(--screen);
+  border: 0.5px solid var(--ink);
+}
+
+.grid-unit:hover {
+  cursor: pointer;
 }
