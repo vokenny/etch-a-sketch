@@ -1,7 +1,8 @@
 :root {
   --ink: #9e9d9e;
   --screen: #f5f0f0;
-  --highlight: green;
+  --highlight: #257ec7;
+  --font-color: whitesmoke;
 }
 
 * {
@@ -29,9 +30,19 @@ html {
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+body {
+  color: var(--font-color);
+  overflow-x: hidden;
+}
+
 #title {
   text-align: center;
-  color: whitesmoke;
+  color: var(--font-color);
+}
+
+#etch-a-sketch {
+  display: grid;
+  justify-content: center;
 }
 
 #grid {
@@ -51,6 +62,29 @@ html {
 }
 
 .grid-unit:hover {
-  border: 3px solid var(--highlight);
+  border: 2px solid var(--highlight);
   cursor: pointer;
+}
+
+#controls {
+  display: flex;
+}
+
+.button {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 5px;
+  border: 1px solid black;
+  display: inline-block;
+  color: var(--font-color);
+  font-size: 15px;
+  padding: 9px 23px;
+}
+
+.button:hover {
+  background-color: var(--highlight);
+}
+
+.button:active {
+  position: relative;
+  top: 1px;
 }

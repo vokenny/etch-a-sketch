@@ -1,10 +1,26 @@
 (function () {
   'use strict';
 
-  const gridContainer = document.querySelector('#grid');
+  const EVENTS = [
+    { name: 'dragend', handler: toggleMouseDownOrTouch },
+    { name: 'mouseup', handler: toggleMouseDownOrTouch },
+    { name: 'mousedown', handler: toggleMouseDownOrTouch },
+    { name: 'mousedown', handler: fillUnit },
+    { name: 'mouseover', handler: fillUnit },
+    { name: 'touchstart', handler: toggleMouseDownOrTouch },
+    { name: 'touchmove', handler: toggleMouseDownOrTouch },
+    { name: 'touchend', handler: toggleMouseDownOrTouch },
+    { name: 'touchstart', handler: fillUnit },
+    { name: 'touchmove', handler: fillUnit }
+  ]
 
-  let gridSize = 16;
+  const gridContainer = document.querySelector('#grid');
+  const gridDensityRadios = document.querySelectorAll('#grid-density-ctrls .button');
+  const getGridUnits = () => document.querySelectorAll('.grid-unit');
+
+  let gridDensity = 16;
   let mouseDown = false;
+  let hasGridEventListeners = false;
 
   function toggleMouseDownOrTouch(event) {
     switch (event.type) {
@@ -20,14 +36,7 @@
   }
 
   function fillUnit(event) {
-    if (mouseDown) {
-      event.target.style.backgroundColor = '#9e9d9e';
-
-      event.target.removeEventListener('mousedown', fillUnit);
-      event.target.removeEventListener('mouseover', fillUnit);
-      event.target.removeEventListener('touchstart', fillUnit);
-      event.target.removeEventListener('touchmove', fillUnit);
-    }
+    if (mouseDown) event.target.style.backgroundColor = '#9e9d9e';
   }
 
   function createGridUnit() {
@@ -45,33 +54,60 @@
   }
 
   function applyGridUnitEventListeners(unit) {
-    unit.addEventListener('dragend', toggleMouseDownOrTouch);
-    unit.addEventListener('mouseup', toggleMouseDownOrTouch);
-    unit.addEventListener('mousedown', toggleMouseDownOrTouch);
-    unit.addEventListener('mousedown', fillUnit);
-    unit.addEventListener('mouseover', fillUnit);
+    EVENTS.forEach(event => {
+      unit.addEventListener(event.name, event.handler)
+      console.log('Added event listener');
+    });
 
-    // touch events
-    unit.addEventListener('touchstart', toggleMouseDownOrTouch);
-    unit.addEventListener('touchmove', toggleMouseDownOrTouch);
-    unit.addEventListener('touchend', toggleMouseDownOrTouch);
-    unit.addEventListener('touchstart', fillUnit);
-    unit.addEventListener('touchmove', fillUnit);
+    hasGridEventListeners = true;
+  }
+
+  function removeGridUnitEventListeners() {
+    const gridUnits = getGridUnits();
+
+    gridUnits.forEach(unit =>
+      EVENTS.forEach(event => {
+        unit.removeEventListener(event.name, event.handler)
+        console.log('Removed event listener');
+      })
+    );
+
+    hasGridEventListeners = false;
   }
 
   function gridUnitStyle() {
     return {
-      width: `calc(100% / ${gridSize})`,
-      height: `calc(100% / ${gridSize})`,
+      width: `calc(100% / ${gridDensity})`,
+      height: `calc(100% / ${gridDensity})`,
     }
   }
 
+  function clearGrid() {
+    removeGridUnitEventListeners();
+    gridContainer.innerHTML = '';
+  }
+
   function displayCleanGrid() {
-    const numOfUnitsInSquare = gridSize * gridSize;
+    clearGrid();
+
+    const numOfUnitsInSquare = gridDensity * gridDensity;
     const gridArray = Array(numOfUnitsInSquare).fill().map(() => createGridUnit());
 
     gridArray.forEach(unit => gridContainer.append(unit));
   }
 
+  function updateGridDensity(event) {
+    gridDensity = event.target.value;
+    displayCleanGrid();
+  }
+
+  function applyControlsEventListeners() {
+    gridDensityRadios.forEach(radio => radio.addEventListener('click', updateGridDensity));
+  }
+
+  /* Main program */
+
   displayCleanGrid();
+  applyControlsEventListeners();
+
 }())
