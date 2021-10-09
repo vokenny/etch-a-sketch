@@ -59,6 +59,7 @@ body {
 .grid-unit {
   background-color: var(--screen);
   border: 0.5px solid var(--ink);
+  transition: background-color 0.25s ease-in;
 }
 
 .grid-unit:hover {
