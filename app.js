@@ -6,15 +6,27 @@
   let gridSize = 16;
   let mouseDown = false;
 
-  function toggleMouseDown(event) {
-    mouseDown = event.type === 'mousedown';
+  function toggleMouseDownOrTouch(event) {
+    switch (event.type) {
+      case 'mousedown':
+      case 'touchstart':
+      case 'touchmove':
+        mouseDown = true;
+        break;
+      default:
+        mouseDown = false;
+        break;
+    }
   }
 
   function fillUnit(event) {
     if (mouseDown) {
       event.target.style.backgroundColor = '#9e9d9e';
+
       event.target.removeEventListener('mousedown', fillUnit);
       event.target.removeEventListener('mouseover', fillUnit);
+      event.target.removeEventListener('touchstart', fillUnit);
+      event.target.removeEventListener('touchmove', fillUnit);
     }
   }
 
@@ -33,11 +45,18 @@
   }
 
   function applyGridUnitEventListeners(unit) {
-    unit.addEventListener('dragend', toggleMouseDown);
-    unit.addEventListener('mouseup', toggleMouseDown);
-    unit.addEventListener('mousedown', toggleMouseDown);
+    unit.addEventListener('dragend', toggleMouseDownOrTouch);
+    unit.addEventListener('mouseup', toggleMouseDownOrTouch);
+    unit.addEventListener('mousedown', toggleMouseDownOrTouch);
     unit.addEventListener('mousedown', fillUnit);
     unit.addEventListener('mouseover', fillUnit);
+
+    // touch events
+    unit.addEventListener('touchstart', toggleMouseDownOrTouch);
+    unit.addEventListener('touchmove', toggleMouseDownOrTouch);
+    unit.addEventListener('touchend', toggleMouseDownOrTouch);
+    unit.addEventListener('touchstart', fillUnit);
+    unit.addEventListener('touchmove', fillUnit);
   }
 
   function gridUnitStyle() {
