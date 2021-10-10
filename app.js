@@ -11,15 +11,10 @@
   const MAX_RGB_VAL = 255;
 
   const EVENTS = [
-    { name: 'dragend', handler: toggleMouseDownOrTouch },
-    { name: 'mouseup', handler: toggleMouseDownOrTouch },
-    { name: 'mousedown', handler: toggleMouseDownOrTouch },
-    { name: 'mousedown', handler: fillUnit },
+    { name: 'click', handler: togglePaint },
     { name: 'mouseover', handler: fillUnit },
-    { name: 'touchstart', handler: toggleMouseDownOrTouch },
-    { name: 'touchmove', handler: toggleMouseDownOrTouch },
-    { name: 'touchend', handler: toggleMouseDownOrTouch },
-    { name: 'touchstart', handler: fillUnit },
+    { name: 'touchstart', handler: togglePaint },
+    { name: 'touchend', handler: togglePaint },
     { name: 'touchmove', handler: fillUnit }
   ]
 
@@ -35,18 +30,18 @@
   let gridDensity = 16;
   let colorMode = 'classic';
   let tool = 'paint';
-  let mouseDown = false;
+  let paintToggle = false;
   let hasGridEventListeners = false;
 
-  function toggleMouseDownOrTouch(event) {
+  function togglePaint(event) {
     switch (event.type) {
-      case 'mousedown':
+      case 'click':
       case 'touchstart':
       case 'touchmove':
-        mouseDown = true;
+        paintToggle = !paintToggle;
         break;
       default:
-        mouseDown = false;
+        paintToggle = false;
         break;
     }
   }
@@ -78,12 +73,12 @@
   }
 
   function fillUnit(event) {
-    if (mouseDown && tool === 'eraser') {
+    if (paintToggle && tool === 'eraser') {
       event.target.style.backgroundColor = '';
       event.target.style.opacity = 1.0;
     }
 
-    if (mouseDown && tool === 'paint') {
+    if (paintToggle && tool === 'paint') {
       switch (colorMode) {
         case 'rainbow':
           applyRainbowColor(event);
