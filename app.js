@@ -1,6 +1,14 @@
 (function () {
   'use strict';
 
+  /* TODOs
+    - Toggle grid lines
+    - Grid density slider
+    - Colour grabber
+    - Color fill
+    - Colour picker
+  */
+
   /* CONSTANTS */
   const CLASSIC_GREY = '#c4c4c4';
   const DARKEST_GREY = 'rgb(50, 50, 50)';
