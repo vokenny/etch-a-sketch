@@ -4,6 +4,8 @@
   const CLASSIC_GREY = '#c4c4c4'
   const DARKEST_GREY = 'rgb(50, 50, 50)';
   const LOWEST_OPACITY = 0.1;
+  const MAX_OPACITY = 1.0;
+  const OPACITY_INC = 0.1;
 
   const EVENTS = [
     { name: 'dragend', handler: toggleMouseDownOrTouch },
@@ -47,7 +49,7 @@
     const opacity = style.opacity;
 
     if (bgColor === DARKEST_GREY) {
-      if (opacity != 1.0) style.opacity = parseFloat(style.opacity) + 0.1;
+      if (opacity != MAX_OPACITY) style.opacity = parseFloat(style.opacity) + OPACITY_INC;
     } else {
       style.backgroundColor = DARKEST_GREY;
       style.opacity = LOWEST_OPACITY;
