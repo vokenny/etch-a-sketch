@@ -2,7 +2,7 @@
   'use strict';
 
   /* CONSTANTS */
-  const CLASSIC_GREY = '#c4c4c4'
+  const CLASSIC_GREY = '#c4c4c4';
   const DARKEST_GREY = 'rgb(50, 50, 50)';
   const MIN_OPACITY = 0.1;
   const MAX_OPACITY = 1.0;
@@ -25,13 +25,16 @@
 
   /* DOCUMENT SELECTORS */
   const gridContainer = document.querySelector('#grid');
-  const gridDensityButtons = document.querySelectorAll('#grid-density-ctrls .button');
-  const colorModeButtons = document.querySelectorAll('#color-mode-ctrls .button');
+  const gridDensityButtons = document.querySelectorAll('.grid-density-ctrl');
+  const colorModeButtons = document.querySelectorAll('.color-mode-ctrl');
+  const toolButtons = document.querySelectorAll('.tool-ctrl');
+  const clearButton = document.querySelector('#clear');
   const getGridUnits = () => document.querySelectorAll('.grid-unit');
 
   /* DEFAULT START CONFIG */
   let gridDensity = 16;
   let colorMode = 'classic';
+  let tool = 'paint';
   let mouseDown = false;
   let hasGridEventListeners = false;
 
@@ -75,7 +78,12 @@
   }
 
   function fillUnit(event) {
-    if (mouseDown) {
+    if (mouseDown && tool === 'eraser') {
+      event.target.style.backgroundColor = '';
+      event.target.style.opacity = 1.0;
+    }
+
+    if (mouseDown && tool === 'paint') {
       switch (colorMode) {
         case 'rainbow':
           applyRainbowColor(event);
@@ -99,29 +107,21 @@
       gridUnit.style[key] = value;
     });
 
-    applyGridUnitEventListeners(gridUnit);
-
     return gridUnit;
   }
 
-  function applyGridUnitEventListeners(unit) {
-    EVENTS.forEach(event => {
-      unit.addEventListener(event.name, event.handler)
-    });
-
-    hasGridEventListeners = true;
-  }
-
-  function removeGridUnitEventListeners() {
+  function manageGridUnitEventListeners() {
     const gridUnits = getGridUnits();
 
     gridUnits.forEach(unit =>
       EVENTS.forEach(event => {
-        unit.removeEventListener(event.name, event.handler)
+        hasGridEventListeners
+          ? unit.removeEventListener(event.name, event.handler)
+          : unit.addEventListener(event.name, event.handler);
       })
     );
 
-    hasGridEventListeners = false;
+    hasGridEventListeners = !hasGridEventListeners;
   }
 
   function gridUnitStyle() {
@@ -132,7 +132,7 @@
   }
 
   function clearGrid() {
-    if (hasGridEventListeners) removeGridUnitEventListeners();
+    manageGridUnitEventListeners();
     gridContainer.innerHTML = '';
   }
 
@@ -142,27 +142,51 @@
     const numOfUnitsInSquare = gridDensity * gridDensity;
     const gridArray = Array(numOfUnitsInSquare).fill().map(() => createGridUnit());
 
+    manageGridUnitEventListeners();
     gridArray.forEach(unit => gridContainer.append(unit));
   }
 
-  function updateGridDensity(event) {
-    gridDensityButtons.forEach(button => button.classList.remove('selected'));
-    event.target.classList.add('selected');
+  function updateSelectedButton(event) {
+    const classes = Array.from(event.target.classList);
+    let buttons = [];
 
+    switch (true) {
+      case classes.includes('grid-density-ctrl'):
+        buttons = gridDensityButtons;
+        break;
+      case classes.includes('color-mode-ctrl'):
+        buttons = colorModeButtons;
+        break;
+      case classes.includes('tool-ctrl'):
+        buttons = toolButtons;
+        break;
+    }
+
+    buttons.forEach(button => button.classList.remove('selected'));
+    event.target.classList.add('selected');
+  }
+
+  function updateGridDensity(event) {
+    updateSelectedButton(event);
     gridDensity = event.target.value;
     displayCleanGrid();
   }
 
   function updateColorMode(event) {
-    colorModeButtons.forEach(button => button.classList.remove('selected'));
-    event.target.classList.add('selected');
-
+    updateSelectedButton(event);
     colorMode = event.target.value;
+  }
+
+  function updateTool(event) {
+    updateSelectedButton(event);
+    tool = event.target.value;
   }
 
   function applyControlsEventListeners() {
     gridDensityButtons.forEach(button => button.addEventListener('click', updateGridDensity));
     colorModeButtons.forEach(button => button.addEventListener('click', updateColorMode));
+    toolButtons.forEach(button => button.addEventListener('click', updateTool));
+    clearButton.addEventListener('click', displayCleanGrid);
   }
 
   /* Main program */
