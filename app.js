@@ -137,13 +137,11 @@
   }
 
   function displayCleanGrid() {
-    clearGrid();
-
     const numOfUnitsInSquare = gridDensity * gridDensity;
     const gridArray = Array(numOfUnitsInSquare).fill().map(() => createGridUnit());
 
-    manageGridUnitEventListeners();
     gridArray.forEach(unit => gridContainer.append(unit));
+    manageGridUnitEventListeners();
   }
 
   function updateSelectedButton(event) {
@@ -169,6 +167,8 @@
   function updateGridDensity(event) {
     updateSelectedButton(event);
     gridDensity = event.target.value;
+
+    clearGrid();
     displayCleanGrid();
   }
 
@@ -186,7 +186,10 @@
     gridDensityButtons.forEach(button => button.addEventListener('click', updateGridDensity));
     colorModeButtons.forEach(button => button.addEventListener('click', updateColorMode));
     toolButtons.forEach(button => button.addEventListener('click', updateTool));
-    clearButton.addEventListener('click', displayCleanGrid);
+    clearButton.addEventListener('click', () => {
+      clearGrid();
+      displayCleanGrid();
+    });
   }
 
   /* Main program */
