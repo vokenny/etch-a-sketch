@@ -1,11 +1,14 @@
 (function () {
   'use strict';
 
+  /* CONSTANTS */
   const CLASSIC_GREY = '#c4c4c4'
   const DARKEST_GREY = 'rgb(50, 50, 50)';
-  const LOWEST_OPACITY = 0.1;
+  const MIN_OPACITY = 0.1;
   const MAX_OPACITY = 1.0;
   const OPACITY_INC = 0.1;
+  const MIN_RGB_VAL = 100;
+  const MAX_RGB_VAL = 255;
 
   const EVENTS = [
     { name: 'dragend', handler: toggleMouseDownOrTouch },
@@ -20,11 +23,13 @@
     { name: 'touchmove', handler: fillUnit }
   ]
 
+  /* DOCUMENT SELECTORS */
   const gridContainer = document.querySelector('#grid');
   const gridDensityButtons = document.querySelectorAll('#grid-density-ctrls .button');
   const colorModeButtons = document.querySelectorAll('#color-mode-ctrls .button');
   const getGridUnits = () => document.querySelectorAll('.grid-unit');
 
+  /* DEFAULT START CONFIG */
   let gridDensity = 16;
   let colorMode = 'classic';
   let mouseDown = false;
@@ -43,6 +48,19 @@
     }
   }
 
+  function randRgbVal() {
+    return MIN_RGB_VAL + Math.floor(Math.random() * (MAX_RGB_VAL - MIN_RGB_VAL));
+  }
+
+  function applyRainbowColor(event) {
+    const style = event.target.style;
+    const red = randRgbVal();
+    const green = randRgbVal();
+    const blue = randRgbVal();
+
+    style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+  }
+
   function applyGreyscaleColor(event) {
     const style = event.target.style;
     const bgColor = style.backgroundColor;
@@ -52,13 +70,16 @@
       if (opacity != MAX_OPACITY) style.opacity = parseFloat(style.opacity) + OPACITY_INC;
     } else {
       style.backgroundColor = DARKEST_GREY;
-      style.opacity = LOWEST_OPACITY;
+      style.opacity = MIN_OPACITY;
     }
   }
 
   function fillUnit(event) {
     if (mouseDown) {
       switch (colorMode) {
+        case 'rainbow':
+          applyRainbowColor(event);
+          break;
         case 'greyscale':
           applyGreyscaleColor(event);
           break;
