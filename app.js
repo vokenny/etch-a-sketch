@@ -1,6 +1,10 @@
 (function () {
   'use strict';
 
+  const CLASSIC_GREY = '#c4c4c4'
+  const DARKEST_GREY = 'rgb(50, 50, 50)';
+  const LOWEST_OPACITY = 0.1;
+
   const EVENTS = [
     { name: 'dragend', handler: toggleMouseDownOrTouch },
     { name: 'mouseup', handler: toggleMouseDownOrTouch },
@@ -16,9 +20,11 @@
 
   const gridContainer = document.querySelector('#grid');
   const gridDensityButtons = document.querySelectorAll('#grid-density-ctrls .button');
+  const colorModeButtons = document.querySelectorAll('#color-mode-ctrls .button');
   const getGridUnits = () => document.querySelectorAll('.grid-unit');
 
   let gridDensity = 16;
+  let colorMode = 'classic';
   let mouseDown = false;
   let hasGridEventListeners = false;
 
@@ -35,8 +41,30 @@
     }
   }
 
+  function applyGreyscaleColor(event) {
+    const style = event.target.style;
+    const bgColor = style.backgroundColor;
+    const opacity = style.opacity;
+
+    if (bgColor === DARKEST_GREY) {
+      if (opacity != 1.0) style.opacity = parseFloat(style.opacity) + 0.1;
+    } else {
+      style.backgroundColor = DARKEST_GREY;
+      style.opacity = LOWEST_OPACITY;
+    }
+  }
+
   function fillUnit(event) {
-    if (mouseDown) event.target.style.backgroundColor = '#9e9d9e';
+    if (mouseDown) {
+      switch (colorMode) {
+        case 'greyscale':
+          applyGreyscaleColor(event);
+          break;
+        default:
+          event.target.style.backgroundColor = CLASSIC_GREY;
+          break;
+      }
+    }
   }
 
   function createGridUnit() {
@@ -81,7 +109,7 @@
   }
 
   function clearGrid() {
-    removeGridUnitEventListeners();
+    if (hasGridEventListeners) removeGridUnitEventListeners();
     gridContainer.innerHTML = '';
   }
 
@@ -102,8 +130,16 @@
     displayCleanGrid();
   }
 
+  function updateColorMode(event) {
+    colorModeButtons.forEach(button => button.classList.remove('selected'));
+    event.target.classList.add('selected');
+
+    colorMode = event.target.value;
+  }
+
   function applyControlsEventListeners() {
     gridDensityButtons.forEach(button => button.addEventListener('click', updateGridDensity));
+    colorModeButtons.forEach(button => button.addEventListener('click', updateColorMode));
   }
 
   /* Main program */

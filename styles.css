@@ -1,5 +1,5 @@
 :root {
-  --ink: #9e9d9e;
+  --gridBorder: #e4e4e4;
   --screen: #f5f0f0;
   --highlight: #f7da59;
   --active: #248ee4;
@@ -82,7 +82,7 @@ body {
 
 .grid-unit {
   background-color: var(--screen);
-  border: 0.5px solid var(--ink);
+  border: 0.5px solid var(--gridBorder);
   transition: background-color 0.25s ease-in;
 }
 
