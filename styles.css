@@ -49,9 +49,10 @@ body {
   display: flex;
   margin: 0 5vw;
   height: min(75vw, 75vh);
+  width: auto;
   min-width: 250px;
-  max-width: 600px;
-  max-height: 600px;
+  max-width: 440px;
+  max-height: 700px;
 }
 
 #controls-fieldset {
@@ -65,6 +66,7 @@ body {
 .ctrl-options {
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
 }
 
 #grid {
@@ -72,8 +74,8 @@ body {
   justify-content: center;
   width: min(75vw, 75vh);
   height: min(75vw, 75vh);
-  max-width: 600px;
-  max-height: 600px;
+  max-width: 700px;
+  max-height: 700px;
   flex-flow: row wrap;
   background-color: var(--screen);
   border: 2px solid black;
@@ -82,7 +84,6 @@ body {
 
 .grid-unit {
   background-color: var(--screen);
-  border: 0.5px solid var(--gridBorder);
   transition: background-color 0.25s ease-in;
 }
 
@@ -91,20 +92,17 @@ body {
   cursor: pointer;
 }
 
-.ctrl-options .button {
-  width: 30%;
-}
-
 .button {
   background-color: rgba(0, 0, 0, 0);
   border-radius: 5px;
   height: 40px;
+  width: 120px;
   border: 1px solid var(--font-color);
   display: inline-block;
   color: var(--font-color);
   font-size: 15px;
   padding: 0 12px;
-  margin: 0 8px;
+  margin: 8px;
 }
 
 .button.selected {
@@ -138,7 +136,7 @@ body {
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 580px) {
   .ctrl-options {
     flex-direction: column;
   }
