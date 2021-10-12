@@ -116,7 +116,7 @@
     const gridUnits = getGridUnits();
 
     gridUnits.forEach(unit =>
-      EVENTS.forEach(event => {
+      GRID_EVENTS.forEach(event => {
         hasGridEventListeners
           ? unit.removeEventListener(event.name, event.handler)
           : unit.addEventListener(event.name, event.handler);
