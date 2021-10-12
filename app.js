@@ -45,7 +45,7 @@
     switch (event.type) {
       case 'click':
       case 'touchstart':
-      case 'touchmove':
+      case 'touchend':
         paintToggle = !paintToggle;
         break;
       default:
