@@ -91,6 +91,10 @@ body {
   cursor: pointer;
 }
 
+.ctrl-options .button {
+  width: 30%;
+}
+
 .button {
   background-color: rgba(0, 0, 0, 0);
   border-radius: 5px;
@@ -113,7 +117,7 @@ body {
   background-color: var(--highlight);
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1024px) {
   #etch-a-sketch {
     flex-direction: column-reverse;
     align-items: center;
@@ -126,11 +130,20 @@ body {
   }
 
   .ctrl-options {
-    flex-direction: column;
     justify-content: space-between;
   }
 
   .button {
     margin: 8px 0;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .ctrl-options {
+    flex-direction: column;
+  }
+
+  .ctrl-options .button {
+    width: 100%;
   }
 }

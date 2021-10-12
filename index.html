@@ -28,35 +28,30 @@
 
             <p><strong>Click on grid to toggle painting</strong></p>
 
-            <div id="grid-density-ctrls">
-              <p>Grid Density</p>
+            <div id="tool-ctrls">
+              <p>Tools</p>
 
               <div class="ctrl-options">
                 <button
-                  id="low"
-                  class="button grid-density-ctrl selected"
+                  id="paint"
+                  class="button tool-ctrl selected"
                   type="button"
-                  value="16"
+                  value="paint"
                 >
-                  16 x 16
+                  Paint
                 </button>
 
                 <button
-                  id="med"
-                  class="button grid-density-ctrl"
+                  id="eraser"
+                  class="button tool-ctrl"
                   type="button"
-                  value="32"
+                  value="eraser"
                 >
-                  32 x 32
+                  Eraser
                 </button>
 
-                <button
-                  id="high"
-                  class="button grid-density-ctrl"
-                  type="button"
-                  value="64"
-                >
-                  64 x 64
+                <button id="clear" class="button" type="button" value="clear">
+                  Clear
                 </button>
               </div>
             </div>
@@ -94,30 +89,35 @@
               </div>
             </div>
 
-            <div id="tool-ctrls">
-              <p>Tools</p>
+            <div id="grid-density-ctrls">
+              <p>Grid Density</p>
 
               <div class="ctrl-options">
                 <button
-                  id="paint"
-                  class="button tool-ctrl selected"
+                  id="low"
+                  class="button grid-density-ctrl selected"
                   type="button"
-                  value="paint"
+                  value="16"
                 >
-                  Paint
+                  16 x 16
                 </button>
 
                 <button
-                  id="eraser"
-                  class="button tool-ctrl"
+                  id="med"
+                  class="button grid-density-ctrl"
                   type="button"
-                  value="eraser"
+                  value="32"
                 >
-                  Eraser
+                  32 x 32
                 </button>
 
-                <button id="clear" class="button" type="button" value="clear">
-                  Clear
+                <button
+                  id="high"
+                  class="button grid-density-ctrl"
+                  type="button"
+                  value="64"
+                >
+                  64 x 64
                 </button>
               </div>
             </div>
