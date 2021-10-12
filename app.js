@@ -2,8 +2,6 @@
   'use strict';
 
   /* TODOs
-    - Toggle grid lines
-    - Grid density slider
     - Colour grabber
     - Color fill
     - Colour picker
@@ -31,9 +29,11 @@
 
   /* DOCUMENT SELECTORS */
   const gridContainer = document.querySelector('#grid');
-  const gridDensityButtons = document.querySelectorAll('.grid-density-ctrl');
+  const gridDensitySlider = document.querySelector('#grid-density-slider');
+  const gridDensityOutput = document.querySelector('#grid-density');
   const colorModeButtons = document.querySelectorAll('.color-mode-ctrl');
   const toolButtons = document.querySelectorAll('.tool-ctrl');
+  const paintButton = document.querySelector('#paint');
   const clearButton = document.querySelector('#clear');
   const gridButton = document.querySelector('#grid-lines');
   const getGridUnits = () => document.querySelectorAll('.grid-unit');
@@ -140,9 +140,17 @@
     }
   }
 
+  function setPaintTool() {
+    tool = 'paint';
+
+    toolButtons.forEach(button => button.classList.remove('selected'));
+    paintButton.classList.add('selected');
+  }
+
   function clearGrid() {
     manageGridUnitEventListeners();
     gridContainer.innerHTML = '';
+    setPaintTool();
   }
 
   function updateGridLines() {
@@ -166,9 +174,6 @@
     let buttons = [];
 
     switch (true) {
-      case classes.includes('grid-density-ctrl'):
-        buttons = gridDensityButtons;
-        break;
       case classes.includes('color-mode-ctrl'):
         buttons = colorModeButtons;
         break;
@@ -182,8 +187,8 @@
   }
 
   function updateGridDensity(event) {
-    updateSelectedButton(event);
     gridDensity = event.target.value;
+    gridDensityOutput.textContent = `${gridDensity} x ${gridDensity}`;
 
     clearGrid();
     displayCleanGrid();
@@ -211,16 +216,15 @@
   }
 
   function applyControlsEventListeners() {
-    gridDensityButtons.forEach(button => button.addEventListener('click', updateGridDensity));
-    colorModeButtons.forEach(button => button.addEventListener('click', updateColorMode));
     toolButtons.forEach(button => button.addEventListener('click', updateTool));
+    colorModeButtons.forEach(button => button.addEventListener('click', updateColorMode));
+    gridDensitySlider.addEventListener('input', updateGridDensity);
+    gridButton.addEventListener('click', toggleGrid);
 
     clearButton.addEventListener('click', () => {
       clearGrid();
       displayCleanGrid();
     });
-
-    gridButton.addEventListener('click', toggleGrid);
   }
 
   /* Main program */

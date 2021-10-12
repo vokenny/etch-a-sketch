@@ -99,35 +99,26 @@
             </div>
 
             <div id="grid-density-ctrls">
-              <p>Grid Density</p>
+              <p>
+                Grid Density
+                <output for="grid-density-slider" id="grid-density"
+                  >16 x 16</output
+                >
+              </p>
 
               <div class="ctrl-options">
-                <button
-                  id="low"
-                  class="button grid-density-ctrl selected"
-                  type="button"
+                <input
+                  type="range"
+                  id="grid-density-slider"
+                  min="16"
+                  max="100"
                   value="16"
-                >
-                  16 x 16
-                </button>
-
-                <button
-                  id="med"
-                  class="button grid-density-ctrl"
-                  type="button"
-                  value="32"
-                >
-                  32 x 32
-                </button>
-
-                <button
-                  id="high"
-                  class="button grid-density-ctrl"
-                  type="button"
-                  value="64"
-                >
-                  64 x 64
-                </button>
+                  step="1"
+                  aria-valuemin="16"
+                  aria-valuemax="100"
+                  aria-valuenow="16"
+                  class="grid-density-ctrl"
+                />
               </div>
             </div>
           </fieldset>

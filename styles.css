@@ -69,6 +69,14 @@ body {
   flex-wrap: wrap;
 }
 
+#grid-density-ctrls .ctrl-options {
+  justify-content: space-around;
+}
+
+#grid-density-slider {
+  width: 80%;
+}
+
 #grid {
   display: flex;
   justify-content: center;
