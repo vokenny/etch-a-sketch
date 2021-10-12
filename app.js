@@ -11,7 +11,7 @@
   const MAX_RGB_VAL = 255;
   const GRID_BORDER_STYLE = '0.5px solid var(--gridBorder)';
 
-  const EVENTS = [
+  const GRID_EVENTS = [
     { name: 'click', handler: togglePaint },
     { name: 'click', handler: fillUnit },
     { name: 'mouseover', handler: fillUnit },
