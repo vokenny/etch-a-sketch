@@ -152,4 +152,8 @@ body {
   .ctrl-options .button {
     width: 100%;
   }
+  
+  #grid-density-slider {
+    width: 100%;
+  }
 }
