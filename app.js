@@ -105,9 +105,9 @@
     gridUnit.classList.add('grid-unit');
 
     const styling = gridUnitStyle();
-    Object.entries(styling).forEach(([key, value]) => {
-      gridUnit.style[key] = value;
-    });
+    for (let prop in styling) {
+      gridUnit.style[prop] = styling[prop];
+    }
 
     return gridUnit;
   }
@@ -157,7 +157,7 @@
 
   function displayCleanGrid() {
     const numOfUnitsInSquare = gridDensity * gridDensity;
-    const gridArray = Array(numOfUnitsInSquare).fill().map(() => createGridUnit());
+    const gridArray = [...Array(numOfUnitsInSquare)].map(() => createGridUnit());
 
     gridArray.forEach(unit => gridContainer.append(unit));
     manageGridUnitEventListeners();
